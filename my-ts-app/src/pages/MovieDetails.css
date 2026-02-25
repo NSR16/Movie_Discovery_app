@@ -1,0 +1,92 @@
+.details-page {
+  background-color: #0b0b0b;
+  color: white;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}
+
+/* The Hero Section with the Backdrop */
+.hero {
+  height: 60vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+/* Dark gradient so text is readable over the image */
+.hero-overlay {
+  background: linear-gradient(to top, #0b0b0b, transparent);
+  width: 100%;
+  padding: 40px;
+}
+
+.hero-overlay h1 {
+  font-size: 3.5rem;
+  margin: 0;
+}
+
+.tagline {
+  font-style: italic;
+  color: #ccc;
+  font-size: 1.2rem;
+}
+
+/* Content Area */
+.content {
+  padding: 40px;
+  max-width: 900px;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.stats {
+  margin-top: 20px;
+  display: flex;
+  gap: 30px;
+  color: #ffcc00; /* Gold color for ratings/stats */
+  font-weight: bold;
+}
+
+/* Back Button styling */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: 1px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  background: white;
+  color: black;
+}
+
+.watchlist-btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 30px;
+  border: 2px solid #ffcc00;
+  background: transparent;
+  color: #ffcc00;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.watchlist-btn.saved {
+  background: #ffcc00;
+  color: black;
+}
+
+.watchlist-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 204, 0, 0.3);
+}
