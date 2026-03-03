@@ -1,6 +1,7 @@
 // src/components/MovieCard.tsx
 import type { Movie } from '../types/movie';
 import { Link } from 'react-router-dom';
+import './MovieCard.css';
 
 interface Props {
   movie: Movie;

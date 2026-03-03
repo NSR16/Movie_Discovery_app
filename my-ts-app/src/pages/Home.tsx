@@ -4,6 +4,7 @@ import { useMovies } from '../hooks/useMovies';
 import { useSearchMovies } from '../hooks/useSearchMovies';
 import MovieCard from '../components/MovieCard';
 import SearchBar from '../components/SearchBar';
+import './MovieDetails.css';
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -19,7 +20,7 @@ const Home = () => {
   return (
     <div className="home-page">
       <header>
-        <h1>MovieStream</h1>
+       
         <SearchBar value={searchTerm} onChange={setSearchTerm} />
       </header>
 

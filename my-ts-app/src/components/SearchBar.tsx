@@ -1,4 +1,6 @@
 // src/components/SearchBar.tsx
+import './Search.css';
+
 interface SearchProps {
   value: string;
   onChange: (val: string) => void;

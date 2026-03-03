@@ -23,5 +23,5 @@ export const useWatchlist = () => {
 
   const isInWatchlist = (id: number) => watchlist.includes(id);
 
-  return { toggleWatchlist, isInWatchlist };
+  return { watchlist,toggleWatchlist, isInWatchlist };
 };
