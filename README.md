@@ -23,17 +23,21 @@ A modern, responsive movie discovery application built with **React**, **TypeScr
    cd my-ts-app
 
  2.**Install dependencies:**
+ 
    npm install
 
 3.**Set up Environment Variables:**
+
 Create a .env file in the root directory and add your TMDB Access Token:
 
 Code snippet
+
 VITE_TMDB_ACCESS_TOKEN=your_token_here
 
 4.**Run the development server:**
 
 Bash
+
 npm run dev
 
 **What I Learned**
