@@ -22,10 +22,10 @@ A modern, responsive movie discovery application built with **React**, **TypeScr
    git clone [YOUR_REPO_URL]
    cd my-ts-app
 
-2. ** Install dependencies:**
+ 2.**Install dependencies:**
    npm install
 
-3.** Set up Environment Variables:**
+3.**Set up Environment Variables:**
 Create a .env file in the root directory and add your TMDB Access Token:
 
 Code snippet
@@ -37,6 +37,7 @@ Bash
 npm run dev
 
 **What I Learned**
+
 Custom Hooks: Created useMovies, useMovieDetails, and useWatchlist to separate business logic from UI.
 
 Parallel Fetching: Used Promise.all to fetch multiple movie details simultaneously for the Watchlist page.
