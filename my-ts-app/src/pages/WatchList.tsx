@@ -52,7 +52,7 @@ const Watchlist = () => {
           ))}
         </div>
       ) : (
-        <p>Your watchlist is empty. Start adding some movies!</p>
+        <p>Your watchlist is empty. Start adding some movies!!</p>
       )}
     </div>
   );
