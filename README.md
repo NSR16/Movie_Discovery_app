@@ -49,21 +49,7 @@ Parallel Fetching: Used Promise.all to fetch multiple movie details simultaneous
 Global State with LocalStorage: Managed a persistent user watchlist across browser sessions.
 
 
----
+# Deployment
 
-## 💡 Pro-Tip: Adding Screenshots
-Since your app looks great now, you should add a screenshot! 
-1. Create a folder in your project called `screenshots`.
-2. Save your best screenshot (like the Trending Grid) inside it.
-3. Add this to your README:
-   `![App Screenshot](./screenshots/home-view.png)`
+[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://movie-discovery-app-two.vercel.app/)
 
----
-
-## 📤 How to update GitHub
-Once you've edited your `README.md`, run these commands to update your repo:
-
-```bash
-git add README.md
-git commit -m "docs: add professional readme"
-git push origin main
