@@ -49,7 +49,7 @@ Parallel Fetching: Used Promise.all to fetch multiple movie details simultaneous
 Global State with LocalStorage: Managed a persistent user watchlist across browser sessions.
 
 
-# Deployment
+# Deployment Link
 
 [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://movie-discovery-app-two.vercel.app/)
 
