@@ -1,73 +1,41 @@
-# React + TypeScript + Vite
+# MovieStream
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+MovieStream is a React, TypeScript, and Vite movie discovery app backed by the TMDB API. The browser requests the app's `/api/movies` endpoint; a server-side proxy adds the TMDB API key and requests TMDB. The credential is kept out of browser code.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Discover popular movies
+- Search movies with a short debounce
+- View movie details
+- Save a watchlist in browser local storage
 
-## React Compiler
+## Environment setup
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Create a `.env` file in this project directory for local development:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```dotenv
+TMDB_API_KEY=your_tmdb_api_key
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Use the TMDB v3 API key. Do not prefix this variable with `VITE_`: Vite exposes `VITE_` variables to browser code. The Vite development proxy reads `TMDB_API_KEY` on the server, and the Vercel function reads the same variable from the Vercel project's server-side environment variables. Configure it for each Vercel environment you use (Preview and Production as needed).
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Run locally
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
+
+The local Vite proxy and the Vercel function support these requests:
+
+- `/api/movies?type=popular` for popular movies
+- `/api/movies?search=movie%20name&page=1` for movie search
+- `/api/movies?id=123` for movie details
+
+## Build
+
+```bash
+npm run build
+```
+
+Vercel's project Root Directory should be `my-ts-app` when deploying from the repository root, so the `api` function directory is at the project root. Configure the `TMDB_API_KEY` environment variable in Vercel; never put the credential in frontend code or a `VITE_` variable.

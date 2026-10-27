@@ -1,16 +1,8 @@
-// src/hooks/useMovies.ts
 import { useState, useEffect } from 'react';
 import type { Movie } from '../types/movie';
 
-export const useMovies = (accessToken: string) => {
-  const options={
-    method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${accessToken}` 
-        }
-  }
-
+// Removed accessToken argument entirely
+export const useMovies = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -19,10 +11,8 @@ export const useMovies = (accessToken: string) => {
     const fetchMovies = async () => {
       try {
         setIsLoading(true);
-        const response = await fetch(
-          'https://api.themoviedb.org/3/movie/popular?language=en-US&page=1',
-          options
-        );
+        // Call your local proxy endpoint with type=popular parameter
+        const response = await fetch('/api/movies?type=popular');
         
         if (!response.ok) {
           throw new Error('Failed to fetch movies');
@@ -37,8 +27,8 @@ export const useMovies = (accessToken: string) => {
       }
     };
 
-    if (accessToken) fetchMovies();
-  }, [accessToken]);
+    fetchMovies();
+  }, []); // Empty dependency array means this runs once on mount safely
 
   return { movies, isLoading, error };
 };

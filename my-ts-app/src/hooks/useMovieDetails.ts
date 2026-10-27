@@ -1,8 +1,8 @@
 // src/hooks/useMovieDetails.ts
 import { useState, useEffect } from 'react';
-import type { MovieDetail } from '../types/movie'; // Using the detailed interface
+import type { MovieDetail } from '../types/movie';
 
-export const useMovieDetails = (id: string | undefined, accessToken: string) => {
+export const useMovieDetails = (id: string | undefined) => {
   const [movie, setMovie] = useState<MovieDetail | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -11,20 +11,10 @@ export const useMovieDetails = (id: string | undefined, accessToken: string) => 
     if (!id) return;
 
     const fetchDetail = async () => {
-      const options = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${accessToken}`
-        }
-      };
-
       try {
         setIsLoading(true);
-        const response = await fetch(
-          `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
-          options
-        );
+        // Call your secure local endpoint instead of TMDB directly
+        const response = await fetch(`/api/movies?id=${id}`);
 
         if (!response.ok) throw new Error('Could not find movie details');
 
@@ -38,7 +28,7 @@ export const useMovieDetails = (id: string | undefined, accessToken: string) => 
     };
 
     fetchDetail();
-  }, [id, accessToken]);
+  }, [id]);
 
   return { movie, isLoading, error };
 };

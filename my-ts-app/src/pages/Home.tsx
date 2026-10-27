@@ -8,11 +8,10 @@ import './MovieDetails.css';
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const token = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 
   // Always call both hooks at the top!
-  const { movies: trendingMovies, isLoading } = useMovies(token);
-  const { results: searchResults, searching } = useSearchMovies(searchTerm, token);
+  const { movies: trendingMovies, isLoading } = useMovies();
+  const { results: searchResults, searching } = useSearchMovies(searchTerm);
 
   // Logic to decide which list to show
   const displayMovies = searchTerm ? searchResults : trendingMovies;
