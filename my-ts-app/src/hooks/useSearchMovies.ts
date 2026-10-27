@@ -1,8 +1,8 @@
-// src/hooks/useSearchMovies.ts
 import { useState, useEffect } from 'react';
 import type { Movie } from '../types/movie';
 
-export const useSearchMovies = (query: string, accessToken: string) => {
+// Removed accessToken argument entirely
+export const useSearchMovies = (query: string) => {
   const [results, setResults] = useState<Movie[]>([]);
   const [searching, setSearching] = useState(false);
 
@@ -14,19 +14,15 @@ export const useSearchMovies = (query: string, accessToken: string) => {
 
     const handler = setTimeout(async () => {
       setSearching(true);
-      const options = {
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${accessToken}`
-        }
-      };
 
       try {
+        // Pointing to your serverless endpoint instead of TMDB directly
         const response = await fetch(
-          `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=1`,
-          options
+          `/api/movies?search=${encodeURIComponent(query)}&page=1`
         );
+        
+        if (!response.ok) throw new Error('Search request failed');
+        
         const data = await response.json();
         setResults(data.results || []);
       } catch (err) {
@@ -34,10 +30,10 @@ export const useSearchMovies = (query: string, accessToken: string) => {
       } finally {
         setSearching(false);
       }
-    }, 500); // 500ms debounce delay
+    }, 500); // Keeping your 500ms debounce delay intact
 
-    return () => clearTimeout(handler); // Cleanup the timer if query changes
-  }, [query, accessToken]);
+    return () => clearTimeout(handler);
+  }, [query]); // Removed accessToken dependency
 
   return { results, searching };
 };

@@ -7,9 +7,9 @@ import './MovieDetails.css';
 const MovieDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate(); // For the "Back" button
-  const token = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
+
   
-  const { movie, isLoading, error } = useMovieDetails(id, token);
+  const { movie, isLoading, error } = useMovieDetails(id);
 
    const { toggleWatchlist, isInWatchlist } = useWatchlist();
   

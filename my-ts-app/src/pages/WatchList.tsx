@@ -8,7 +8,6 @@ const Watchlist = () => {
   const { watchlist } = useWatchlist();
   const [movies, setMovies] = useState<Movie[]>([]);
   const [loading, setLoading] = useState(false);
-  const token = import.meta.env.VITE_TMDB_ACCESS_TOKEN;
 
   useEffect(() => {
     const fetchWatchlistMovies = async () => {
@@ -20,16 +19,16 @@ const Watchlist = () => {
       setLoading(true);
       try {
         const moviePromises = watchlist.map(id =>
-          fetch(`https://api.themoviedb.org/3/movie/${id}?language=en-US`, {
-            headers: {
-              accept: 'application/json',
-              Authorization: `Bearer ${token}`
-            }
-          }).then(res => res.json())
+          // Pointing to your proxy route instead of TMDB directly
+          fetch(`/api/movies?id=${id}`).then(res => {
+            if (!res.ok) throw new Error(`Failed to fetch movie ${id}`);
+            return res.json();
+          })
         );
 
         const results = await Promise.all(moviePromises);
-        setMovies(results);
+        // Optional: Filter out any null/undefined results if a specific call failed
+        setMovies(results.filter(movie => movie && movie.id));
       } catch (err) {
         console.error("Error fetching watchlist", err);
       } finally {
@@ -38,7 +37,7 @@ const Watchlist = () => {
     };
 
     fetchWatchlistMovies();
-  }, [watchlist, token]);
+  }, [watchlist]); // Removed token from the dependency array
 
   return (
     <div className="watchlist-page">
