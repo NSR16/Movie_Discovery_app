@@ -1,55 +1,121 @@
 # 🎬 MovieStream
 
-A modern, responsive movie discovery application built with **React**, **TypeScript**, and the **TMDB API**. This project demonstrates intermediate frontend concepts like custom hooks, debounced search, and persistent local storage.
+A modern, responsive movie discovery application built with **React, TypeScript, and the TMDB API**. MovieStream features debounced search, dynamic routing, a persistent watchlist, and a server-side API proxy to keep TMDB credentials out of the frontend.
 
 ## 🚀 Features
-* **Live Search:** Real-time movie searching with debouncing to optimize API calls.
-* **Watchlist:** Save your favorite movies to your browser's local storage.
-* **Dynamic Routing:** Seamless navigation between Home, Search, and Detail pages.
-* **Responsive Design:** A cinematic "Dark Mode" UI that works on mobile and desktop.
-* **TypeScript:** Strictly typed components and API responses for better developer experience.
+
+- **Popular Movies:** Discover popular movies using data from TMDB.
+- **Live Search:** Search for movies with debouncing to reduce unnecessary API requests.
+- **Movie Details:** View individual movie details through dynamic routes.
+- **Watchlist:** Save movies to your browser's `localStorage`. Your watchlist persists across page reloads and browser sessions.
+- **Dynamic Routing:** Navigate between the home page, movie details, and watchlist.
+- **Server-Side API Proxy:** Uses a Vercel serverless function to communicate with TMDB without exposing the TMDB API key in client-side code.
+- **Responsive Design:** A cinematic dark-mode interface designed for mobile and desktop.
+- **TypeScript:** Type-safe components and API interactions.
 
 ## 🛠️ Tech Stack
-* **Framework:** React 18 (Vite)
-* **Language:** TypeScript
-* **Routing:** React Router DOM
-* **API:** The Movie Database (TMDB)
-* **Styling:** CSS3 (Modular CSS)
+
+- **Frontend:** React, TypeScript, Vite
+- **Routing:** React Router DOM
+- **API:** The Movie Database (TMDB)
+- **Backend / API Proxy:** Vercel Serverless Functions
+- **Styling:** CSS3
+- **Persistence:** Browser `localStorage`
+- **Deployment:** Vercel
+
+## 📁 Project Structure
+
+```text
+my-ts-app/
+├── api/
+│   └── movies.ts        # Serverless TMDB proxy
+├── src/
+│   ├── components/      # Reusable UI components
+│   ├── hooks/           # Movie fetching and watchlist hooks
+│   ├── pages/           # Application pages
+│   └── ...              # App, styles, and supporting files
+├── .env.example         # Example environment configuration, if present
+├── vite.config.ts       # Local development API proxy
+├── vercel.json          # Vercel configuration
+└── package.json
+```
 
 ## 📦 Installation & Setup
-1. **Clone the repository:**
-   ```bash
-   git clone [YOUR_REPO_URL]
-   cd my-ts-app
 
- 2.**Install dependencies:**
- 
-   npm install
+### 1. Clone the repository
 
-3.**Set up Environment Variables:**
+```bash
+git clone https://github.com/NSR16/Movie_Discovery_app.git
+cd Movie_Discovery_app/my-ts-app
+```
 
-Create a .env file in the root directory and add your TMDB Access Token:
+### 2. Install dependencies
 
-Code snippet
+```bash
+npm install
+```
 
-VITE_TMDB_ACCESS_TOKEN=your_token_here
+### 3. Configure environment variables
 
-4.**Run the development server:**
+Create a `.env` file inside the `my-ts-app` directory and add your TMDB API key:
 
-Bash
+```env
+TMDB_API_KEY=your_tmdb_api_key_here
+```
 
+Obtain your API credentials from [TMDB](https://www.themoviedb.org/).
+
+**Important:** Keep `TMDB_API_KEY` private. Do not commit your `.env` file or expose this key through a `VITE_`-prefixed frontend environment variable.
+
+### 4. Start the development server
+
+```bash
 npm run dev
+```
 
-**What I Learned**
+Vite starts the frontend development server. The local development proxy configured in `vite.config.ts` forwards `/api/movies` requests to TMDB using the server-side API key.
 
-Custom Hooks: Created useMovies, useMovieDetails, and useWatchlist to separate business logic from UI.
+## 🔌 API Proxy
 
-Parallel Fetching: Used Promise.all to fetch multiple movie details simultaneously for the Watchlist page.
+The application uses the `/api/movies` endpoint instead of making TMDB requests directly from the browser.
 
-Global State with LocalStorage: Managed a persistent user watchlist across browser sessions.
+The Vercel serverless function in `api/movies.ts` supports these request types:
 
+| Request | Purpose |
+|---|---|
+| `/api/movies?type=popular` | Fetch popular movies |
+| `/api/movies?search=batman&page=1` | Search for movies |
+| `/api/movies?id=550` | Fetch details for a movie |
 
-# Deployment Link
+The function validates the request parameters, uses `TMDB_API_KEY` on the server, and returns the TMDB response to the frontend.
 
-[![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://movie-discovery-app-two.vercel.app/)
+In local development, `vite.config.ts` provides the corresponding proxy behavior.
 
+## 🚀 Deployment
+
+MovieStream is deployed on Vercel:
+
+**[Live Demo](https://movie-discovery-app-two.vercel.app/)**
+
+To deploy your own instance:
+
+1. Import the GitHub repository into Vercel.
+2. Set the project root directory to `my-ts-app`.
+3. Add `TMDB_API_KEY` under the appropriate Vercel environment variables for **Production** and **Preview**.
+4. Deploy the project.
+
+Vercel automatically creates deployments when changes are pushed to the connected GitHub repository. The `main` branch is used for production, while the `proxy` branch can be used for preview deployments.
+
+## 💡 What I Learned
+
+- **Custom Hooks:** Separated movie fetching, search, details, and watchlist logic from UI components.
+- **Debounced Search:** Reduced unnecessary API requests while users type.
+- **Parallel Fetching:** Used `Promise.all` to fetch multiple movie details for the watchlist.
+- **Persistent State:** Used `localStorage` to preserve the watchlist across browser sessions.
+- **Dynamic Routing:** Implemented movie-specific routes and fixed navigation from the watchlist to movie details.
+- **Serverless Architecture:** Built a server-side TMDB proxy to keep API credentials out of the frontend.
+- **Deployment Workflow:** Used GitHub branches and Vercel Preview and Production deployments to test changes before releasing them.
+
+---
+
+Made with React, TypeScript, and TMDB.
